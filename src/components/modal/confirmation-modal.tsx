@@ -44,18 +44,28 @@ export function ConfirmationModal({
   const isDanger = variant === "danger";
 
   return (
-    <div className="flex flex-col items-center space-y-6 p-2">
+    <div
+      className="flex flex-col items-center space-y-6 p-2"
+      role="dialog"
+      aria-labelledby="confirmation-title"
+      aria-describedby="confirmation-message"
+    >
       <div
         className={`w-16 h-16 rounded-full flex items-center justify-center ${
           isDanger ? "bg-red-100" : "bg-blue-100"
         }`}
+        aria-hidden="true"
       >
         <WarningIcon isDanger={isDanger} />
       </div>
 
-      <h3 className="text-xl font-semibold text-gray-900 text-center">{title}</h3>
+      <h3 id="confirmation-title" className="text-xl font-semibold text-gray-900 text-center">
+        {title}
+      </h3>
 
-      <p className="text-gray-600 text-center max-w-sm">{message}</p>
+      <p id="confirmation-message" className="text-gray-600 text-center max-w-sm">
+        {message}
+      </p>
 
       <div className="flex gap-3 w-full max-w-xs">
         <Button

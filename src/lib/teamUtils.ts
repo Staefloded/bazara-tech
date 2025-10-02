@@ -50,7 +50,6 @@ export const sortTeams = (teams: Team[], sortConfig: TeamSortConfig): Team[] => 
       return sortConfig.direction === "asc" ? comparison : -comparison;
     }
 
-    // Fallback to string comparison
     const aStr = String(aValue);
     const bStr = String(bValue);
     const comparison = aStr.localeCompare(bStr);
@@ -76,35 +75,12 @@ export const validateTeamCode = (
 ): boolean => {
   const trimmedCode = code.trim().toUpperCase();
 
-  // Check if code is empty
   if (!trimmedCode) {
     return false;
   }
 
-  // Check if code already exists (excluding current team if editing)
   const existingTeam = existingTeams.find(
     (team) => team.code.toUpperCase() === trimmedCode && team.id !== excludeId
-  );
-
-  return !existingTeam;
-};
-
-export const validateTeamEmail = (
-  email: string,
-  existingTeams: Team[],
-  excludeId?: string
-): boolean => {
-  const trimmedEmail = email.trim().toLowerCase();
-
-  // Basic email validation
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(trimmedEmail)) {
-    return false;
-  }
-
-  // Check if email already exists (excluding current team if editing)
-  const existingTeam = existingTeams.find(
-    (team) => team.email.toLowerCase() === trimmedEmail && team.id !== excludeId
   );
 
   return !existingTeam;

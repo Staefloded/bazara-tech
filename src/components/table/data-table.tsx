@@ -104,6 +104,7 @@ export function DataTable<TData, TValue>({
         }}
       >
         <Table
+          aria-label="Data table"
           style={{
             minWidth: data?.length && customSize ? table.getCenterTotalSize() : "100%",
             width: "100%",

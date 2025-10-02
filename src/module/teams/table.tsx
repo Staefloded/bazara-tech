@@ -239,12 +239,14 @@ export default function TeamTable() {
             value={searchValue}
             onChange={(e) => handleSearchChange(e.target.value)}
             className="pl-10"
+            aria-label="Search teams by name or code"
+            role="searchbox"
           />
         </div>
 
         <Popover>
           <PopoverTrigger asChild>
-            <Button variant="outline" className="gap-2">
+            <Button variant="outline" className="gap-2" aria-label="Filter by entity">
               {selectedEntity === "all" ? "Entity: All" : `Entity: ${selectedEntity}`}
               <ChevronDown className="h-4 w-4" />
             </Button>
@@ -270,7 +272,7 @@ export default function TeamTable() {
 
         <Popover>
           <PopoverTrigger asChild>
-            <Button variant="outline" className="gap-2">
+            <Button variant="outline" className="gap-2" aria-label="More filters">
               More Filters
               <ChevronDown className="h-4 w-4" />
             </Button>
@@ -305,7 +307,12 @@ export default function TeamTable() {
           options={sortOptions}
         />
 
-        <Button variant="brand" className="gap-2" onClick={handleCreateTeam}>
+        <Button
+          variant="brand"
+          className="gap-2"
+          onClick={handleCreateTeam}
+          aria-label="Create new team"
+        >
           <Plus className="h-4 w-4" />
           Create New Team
         </Button>

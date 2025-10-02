@@ -72,9 +72,9 @@ export function DeleteTeamModal({ isOpen, onClose, team }: DeleteTeamModalProps)
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="max-w-sm">
+      <DialogContent className="max-w-sm" aria-labelledby="delete-team-modal-title">
         <DialogHeader>
-          <DialogTitle className="sr-only">
+          <DialogTitle id="delete-team-modal-title" className="sr-only">
             {stage === DeleteStages.CONFIRMATION ? "Delete Team" : "Team Deleted"}
           </DialogTitle>
         </DialogHeader>

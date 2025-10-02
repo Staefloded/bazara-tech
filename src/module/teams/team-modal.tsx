@@ -127,7 +127,12 @@ export function TeamModal({
 
   const renderStages = {
     [Stages.FILL_DETAILS]: (
-      <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
+      <form
+        onSubmit={handleSubmit(handleFormSubmit)}
+        className="space-y-6"
+        role="form"
+        aria-labelledby="team-modal-title"
+      >
         <div className="space-y-1">
           <Label htmlFor="entity" className="text-sm font-medium">
             Entity <span className="text-red-500">*</span>
@@ -136,7 +141,7 @@ export function TeamModal({
             value={watch("entity")}
             onValueChange={(value) => setValue("entity", value, { shouldValidate: true })}
           >
-            <SelectTrigger className="w-full">
+            <SelectTrigger className="w-full" aria-required="true" aria-invalid={!!errors.entity}>
               <SelectValue placeholder="Select entity" />
             </SelectTrigger>
             <SelectContent>
@@ -161,12 +166,15 @@ export function TeamModal({
               placeholder="Enter team name"
               {...register("name")}
               className={errors.name ? "border-red-500" : ""}
+              aria-required="true"
+              aria-invalid={!!errors.name}
+              aria-describedby={errors.name ? "name-error" : undefined}
             />
             {!errors.name && watch("name") && (
               <Check className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-green-500" />
             )}
           </div>
-          {errors.name && <FormError error={errors.name?.message} />}
+          {errors.name && <FormError id="name-error" error={errors.name?.message} />}
         </div>
 
         <div className="space-y-1">
@@ -184,6 +192,9 @@ export function TeamModal({
               }}
               maxLength={5}
               disabled={mode === "edit"}
+              aria-required="true"
+              aria-invalid={!!errors.code}
+              aria-describedby={errors.code ? "code-error" : undefined}
             />
 
             {mode === "create" && watch("name") && (
@@ -205,7 +216,7 @@ export function TeamModal({
             )}
           </div>
 
-          {errors.code && <FormError error={errors.code?.message} />}
+          {errors.code && <FormError id="code-error" error={errors.code?.message} />}
           <p className="text-xs text-gray-500">Min.: 3 and Max.: 5 characters</p>
         </div>
 
@@ -217,7 +228,7 @@ export function TeamModal({
             value={watch("manager")}
             onValueChange={(value) => setValue("manager", value, { shouldValidate: true })}
           >
-            <SelectTrigger className="w-full">
+            <SelectTrigger className="w-full" aria-required="true" aria-invalid={!!errors.manager}>
               <SelectValue placeholder="Select manager" />
             </SelectTrigger>
             <SelectContent>
@@ -241,9 +252,14 @@ export function TeamModal({
             placeholder="Enter the description of this Team"
             {...register("description")}
             className={errors.description ? "border-red-500" : ""}
+            aria-required="true"
+            aria-invalid={!!errors.description}
+            aria-describedby={errors.description ? "description-error" : undefined}
           />
 
-          {errors.description && <FormError error={errors.description?.message} />}
+          {errors.description && (
+            <FormError id="description-error" error={errors.description?.message} />
+          )}
         </div>
 
         <div className="space-y-1">
@@ -260,13 +276,16 @@ export function TeamModal({
               className={`${
                 errors.email ? "border-red-500" : ""
               } border-purple-300 focus:border-purple-500 focus:ring-purple-500`}
+              aria-required="true"
+              aria-invalid={!!errors.email}
+              aria-describedby={errors.email ? "email-error" : undefined}
             />
 
             {!errors.email && watch("email") && (
               <Check className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-green-500" />
             )}
           </div>
-          {errors.email && <FormError error={errors.email?.message} />}
+          {errors.email && <FormError id="email-error" error={errors.email?.message} />}
 
           <p className="text-sm text-gray-600 py-1 rounded-md">
             Everyone in this Team receives an email whenever a message is sent to this email
@@ -312,10 +331,15 @@ export function TeamModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="max-w-2xl max-h-[95vh] overflow-y-auto">
+      <DialogContent
+        className="max-w-2xl max-h-[95vh] overflow-y-auto"
+        aria-labelledby="team-modal-title"
+      >
         {stage === Stages.FILL_DETAILS && (
           <DialogHeader>
-            <DialogTitle>{mode === "create" ? "New Team" : "Edit Team"}</DialogTitle>
+            <DialogTitle id="team-modal-title">
+              {mode === "create" ? "New Team" : "Edit Team"}
+            </DialogTitle>
           </DialogHeader>
         )}
 
