@@ -18,7 +18,7 @@ Just documenting some key decisions I made while building this.
 
 **What I did**: Simple pagination.
 
-**Why**: 520 items isn't that much. Virtualization adds complexity and pagination is more predictable. Users know how pagination works, and it's easier to implement search/filtering.
+**Why**: 520 items is manageable without virtualization. Pagination is simpler to implement, more familiar to users, and works better with search/filtering. For a data table like this, pagination is the right choice.
 
 **Trade-offs**: Uses more memory since all data is loaded, but for this size it doesn't matter. Would need to rethink if we had 10k+ items.
 
