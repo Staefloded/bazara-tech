@@ -7,9 +7,17 @@ const usePagination = (pageSize = 10) => {
   const router = useRouter();
   const pathname = usePathname();
 
-  const [pagination, setPagination] = useState<PaginationState>({
-    pageIndex: search.get("page") ? Number(search.get("page")) - 1 : 0,
-    pageSize: search.get("pageSize") ? Number(search.get("pageSize")) : pageSize,
+  const [pagination, setPagination] = useState<PaginationState>(() => {
+    const pageParam = search.get("page");
+    const pageSizeParam = search.get("pageSize");
+
+    const pageIndex = pageParam ? Number(pageParam) - 1 : 0;
+    const _pageSize = pageSizeParam ? Number(pageSizeParam) : pageSize;
+
+    return {
+      pageIndex: isNaN(pageIndex) ? 0 : pageIndex,
+      pageSize: isNaN(_pageSize) ? pageSize : _pageSize,
+    };
   });
 
   const handlePageChange = (page: number | null) => {

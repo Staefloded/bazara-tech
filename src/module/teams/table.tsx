@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { ColumnDef } from "@tanstack/react-table";
-import { Search, Plus, ChevronDown, MoreVertical } from "lucide-react";
+import { Search, Plus, ChevronDown, MoreVertical, XCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -49,6 +49,8 @@ export default function TeamTable() {
     sortConfig,
     handleSort,
     handleManagerFilter,
+    clearFilters,
+    filters,
   } = useTeamManagement();
 
   const [searchValue, setSearchValue] = useState("");
@@ -202,7 +204,7 @@ export default function TeamTable() {
               <DropdownMenuItem asChild>
                 <button
                   type="button"
-                  className="w-full"
+                  className="w-full cursor-pointer"
                   onClick={() => handleEditTeam(row.original)}
                 >
                   Edit
@@ -212,7 +214,7 @@ export default function TeamTable() {
               <DropdownMenuItem asChild>
                 <button
                   type="button"
-                  className="w-full text-red-600 hover:text-red-700"
+                  className="w-full text-red-600 hover:text-red-700 cursor-pointer"
                   onClick={() => handleDeleteTeam(row.original)}
                 >
                   Delete
@@ -226,10 +228,22 @@ export default function TeamTable() {
   ];
 
   return (
-    <div className=" mx-auto p-6">
-      <div className="mb-6">
+    <div className="mx-auto p-6 bg-white rounded-lg">
+      <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold text-gray-900">Teams</h1>
+
+        {Object.values(filters).some((value) => value) && (
+          <button
+            className=" text-gray-500 rounded-full border border-gray-300 px-4 py-2 flex items-center gap-2 text-xs font-medium cursor-pointer"
+            onClick={clearFilters}
+          >
+            Clear Filters
+            <XCircle className="h-4 w-4" />
+          </button>
+        )}
       </div>
+
+      <hr className="mt-6 mb-8 border-[#EBEBEB]" />
 
       <div className="mb-6 flex items-center gap-4">
         <div className="relative flex-1 max-w-md">

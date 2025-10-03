@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { TeamStoreProvider } from "@/store/providers/team-provider";
+import Navbar from "@/components/navbar";
+import TabNavigation from "@/components/tab-navigation";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,7 +28,11 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <TeamStoreProvider>{children}</TeamStoreProvider>
+        <TeamStoreProvider>
+          <Navbar />
+          <TabNavigation />
+          {children}
+        </TeamStoreProvider>
       </body>
     </html>
   );
